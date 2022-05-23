@@ -1,8 +1,6 @@
 name: Test and Scan
 on:
-  push:
-   branches-ignore:
-     - "main"
+  push
 jobs:
   test_and_scan:
     name: Run tests and Scan
@@ -25,7 +23,7 @@ jobs:
       - name: Run Tests
         run: poetry run pytest --cov --cov-report=xml tests/
       - name: Fix Coverage File
-        run: sed -i 's+/home/runner/work/da-code-a/pokecounter+/github/workspace+g' coverage.xml
+        run: sed -i 's+/home/runner/work/pokecounter/pokecounter+/github/workspace+g' coverage.xml
       - name: Scan with Sonar
         uses: sonarsource/sonarcloud-github-action@master
         env:
