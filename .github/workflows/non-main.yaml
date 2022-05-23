@@ -1,0 +1,33 @@
+name: Test and Scan
+on:
+  push:
+   branches-ignore:
+     - "main"
+jobs:
+  test_and_scan:
+    name: Run tests and Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+         python-version: 3.9
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+         poetry-version: 1.1.13
+      - name: Install Package
+        run: poetry install
+      - name: Run Tests
+        run: poetry run pytest --cov --cov-report=xml tests/
+      - name: Fix Coverage File
+        run: sed -i 's+/home/runner/work/da-code-a/pokecounter+/github/workspace+g' coverage.xml
+      - name: Scan with Sonar
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

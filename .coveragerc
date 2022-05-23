@@ -1,0 +1,11 @@
+[run]
+source = pokecounter
+
+[paths]
+source = pokecounter
+
+[report]
+fail_under = 75
+
+[xml]
+output = coverage.xml
