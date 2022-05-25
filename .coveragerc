@@ -1,5 +1,9 @@
 [run]
 source = pokecounter
+include = pokecounter/*
+omit =
+    pokecounter/ui.py
+    pokecounter/__main__.py
 
 [paths]
 source = pokecounter
